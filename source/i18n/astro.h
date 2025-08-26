@@ -239,6 +239,22 @@ public:
   CalendarAstronomer(UDate d);
 
   /**
+   * Construct a new <code>CalendarAstronomer</code> object with the given
+   * latitude and longitude.  The object's time is set to the current
+   * date and time.
+   * <p>
+   * @param longitude The desired longitude, in <em>degrees</em> east of
+   *                  the Greenwich meridian.
+   *
+   * @param latitude  The desired latitude, in <em>degrees</em>.  Positive
+   *                  values signify North, negative South.
+   *
+   * @see java.util.Date#getTime()
+   * @internal
+   */
+  CalendarAstronomer(double longitude, double latitude);
+
+  /**
    * Destructor
    * @internal
    */
@@ -255,10 +271,24 @@ public:
    * @param aTime the date and time, expressed as the number of milliseconds since
    *              1/1/1970 0:00 GMT (Gregorian).
    *
+   * @see #setDate
    * @see #getTime
    * @internal
    */
   void setTime(UDate aTime);
+
+
+  /**
+   * Set the current date and time of this <code>CalendarAstronomer</code> object.  All
+   * astronomical calculations are performed based on this time setting.
+   *
+   * @param aTime the date and time, expressed as the number of milliseconds since
+   *              1/1/1970 0:00 GMT (Gregorian).
+   *
+   * @see #getTime
+   * @internal
+   */
+  void setDate(UDate aDate) { setTime(aDate); }
 
   /**
    * Get the current time of this <code>CalendarAstronomer</code> object,
@@ -266,6 +296,7 @@ public:
    * 1/1/1970 AD 0:00 GMT (Gregorian).
    *
    * @see #setTime
+   * @see #getDate
    * @internal
    */
   UDate getTime();
@@ -280,7 +311,43 @@ public:
    */
   double getJulianDay();
 
+  /**
+   * Returns the current Greenwich sidereal time, measured in hours
+   * @internal
+   */
+  double getGreenwichSidereal();
+
+private:
+  double getSiderealOffset();
 public:
+  /**
+   * Returns the current local sidereal time, measured in hours
+   * @internal
+   */
+  double getLocalSidereal();
+
+  /**
+   * Converts local sidereal time to Universal Time.
+   *
+   * @param lst   The Local Sidereal Time, in hours since sidereal midnight
+   *              on this object's current date.
+   *
+   * @return      The corresponding Universal Time, in milliseconds since
+   *              1 Jan 1970, GMT.
+   */
+  //private:
+  double lstToUT(double lst);
+
+  /**
+   *
+   * Convert from ecliptic to equatorial coordinates.
+   *
+   * @param ecliptic     The ecliptic
+   * @param result       Fillin result
+   * @return reference to result
+   */
+  Equatorial& eclipticToEquatorial(Equatorial& result, const Ecliptic& ecliptic);
+
   /**
    * Convert from ecliptic to equatorial coordinates.
    *
@@ -291,6 +358,16 @@ public:
    * @internal
    */
   Equatorial& eclipticToEquatorial(Equatorial& result, double eclipLong, double eclipLat);
+
+  /**
+   * Convert from ecliptic longitude to equatorial coordinates.
+   *
+   * @param eclipLong     The ecliptic longitude
+   *
+   * @return              The corresponding point in equatorial coordinates.
+   * @internal
+   */
+  Equatorial& eclipticToEquatorial(Equatorial& result, double eclipLong) ;
 
   //-------------------------------------------------------------------------
   // The Sun
@@ -314,6 +391,14 @@ public:
    */
   /*public*/ void getSunLongitude(double julianDay, double &longitude, double &meanAnomaly);
 
+  /**
+   * The position of the sun at this object's current date and time,
+   * in equatorial coordinates.
+   * @param result fillin for the result
+   * @internal
+   */
+  Equatorial& getSunPosition(Equatorial& result);
+
 public:
   /**
    * Constant representing the winter solstice.
@@ -329,6 +414,20 @@ public:
    * @internal
    */
   UDate getSunTime(double desired, UBool next);
+
+  /**
+   * Returns the time (GMT) of sunrise or sunset on the local date to which
+   * this calendar is currently set.
+   *
+   * NOTE: This method only works well if this object is set to a
+   * time near local noon.  Because of variations between the local
+   * official time zone and the geographic longitude, the
+   * computation can flop over into an adjacent day if this object
+   * is set to a time near local midnight.
+   *
+   * @internal
+   */
+  UDate getSunRiseSet(UBool rise);
 
   //-------------------------------------------------------------------------
   // The Moon
@@ -383,7 +482,7 @@ public:
   // Interpolation methods for finding the time at which a given event occurs
   //-------------------------------------------------------------------------
 
-public:
+  // private
   class AngleFunc : public UMemory {
   public:
     virtual double eval(CalendarAstronomer&) = 0;
@@ -391,9 +490,19 @@ public:
   };
   friend class AngleFunc;
 
-private:
   UDate timeOfAngle(AngleFunc& func, double desired,
                     double periodDays, double epsilon, UBool next);
+
+  class CoordFunc : public UMemory {
+  public:
+    virtual void eval(Equatorial& result, CalendarAstronomer&) = 0;
+    virtual ~CoordFunc();
+  };
+  friend class CoordFunc;
+
+  double riseOrSet(CoordFunc& func, UBool rise,
+                   double diameter, double refraction,
+                   double epsilon);
 
   //-------------------------------------------------------------------------
   // Other utility methods
@@ -420,13 +529,25 @@ private:
    */
   UDate fTime;
 
+  /* These aren't used yet, but they'll be needed for sunset calculations
+   * and equatorial to horizon coordinate conversions
+   */
+  double fLongitude;
+  double fLatitude;
+  double fGmtOffset;
+
+  //
   // The following fields are used to cache calculated results for improved
   // performance.  These values all depend on the current time setting
   // of this object, so the clearCache method is provided.
+  //
+
   double    julianDay;
   double    sunLongitude;
   double    meanAnomalySun;
   double    moonEclipLong;
+  double    siderealT0;
+  double    siderealTime;
 
   void clearCache();
 

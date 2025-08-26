@@ -242,7 +242,7 @@ inline static  double normPI(double angle)  {
  * @deprecated ICU 2.4. This class may be removed or modified.
  */
 CalendarAstronomer::CalendarAstronomer():
-  fTime(Calendar::getNow()), moonPosition(0,0), moonPositionSet(false) {
+  fTime(Calendar::getNow()), fLongitude(0.0), fLatitude(0.0), fGmtOffset(0.0), moonPosition(0,0), moonPositionSet(false) {
   clearCache();
 }
 
@@ -252,7 +252,30 @@ CalendarAstronomer::CalendarAstronomer():
  * @internal
  * @deprecated ICU 2.4. This class may be removed or modified.
  */
-CalendarAstronomer::CalendarAstronomer(UDate d): fTime(d), moonPosition(0,0), moonPositionSet(false) {
+CalendarAstronomer::CalendarAstronomer(UDate d): fTime(d), fLongitude(0.0), fLatitude(0.0), fGmtOffset(0.0), moonPosition(0,0), moonPositionSet(false) {
+  clearCache();
+}
+
+/**
+ * Construct a new <code>CalendarAstronomer</code> object with the given
+ * latitude and longitude.  The object's time is set to the current
+ * date and time.
+ * <p>
+ * @param longitude The desired longitude, in <em>degrees</em> east of
+ *                  the Greenwich meridian.
+ *
+ * @param latitude  The desired latitude, in <em>degrees</em>.  Positive
+ *                  values signify North, negative South.
+ *
+ * @see java.util.Date#getTime()
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+CalendarAstronomer::CalendarAstronomer(double longitude, double latitude) :
+  fTime(Calendar::getNow()), moonPosition(0,0), moonPositionSet(false) {
+  fLongitude = normPI(longitude * (double)DEG_RAD);
+  fLatitude  = normPI(latitude  * (double)DEG_RAD);
+  fGmtOffset = (double)(fLongitude * 24. * (double)HOUR_MS / (double)CalendarAstronomer_PI2);
   clearCache();
 }
 
@@ -312,9 +335,81 @@ double CalendarAstronomer::getJulianDay() {
     return julianDay;
 }
 
+/**
+ * Returns the current Greenwich sidereal time, measured in hours
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+double CalendarAstronomer::getGreenwichSidereal() {
+    if (isINVALID(siderealTime)) {
+        // See page 86 of "Practical Astronomy with your Calculator",
+        // by Peter Duffet-Smith, for details on the algorithm.
+
+        double UT = normalize(fTime/(double)HOUR_MS, 24.);
+
+        siderealTime = normalize(getSiderealOffset() + UT*1.002737909, 24.);
+    }
+    return siderealTime;
+}
+
+double CalendarAstronomer::getSiderealOffset() {
+    if (isINVALID(siderealT0)) {
+        double JD  = uprv_floor(getJulianDay() - 0.5) + 0.5;
+        double S   = JD - 2451545.0;
+        double T   = S / 36525.0;
+        siderealT0 = normalize(6.697374558 + 2400.051336*T + 0.000025862*T*T, 24);
+    }
+    return siderealT0;
+}
+
+/**
+ * Returns the current local sidereal time, measured in hours
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+double CalendarAstronomer::getLocalSidereal() {
+    return normalize(getGreenwichSidereal() + (fGmtOffset/(double)HOUR_MS), 24.);
+}
+
+/**
+ * Converts local sidereal time to Universal Time.
+ *
+ * @param lst   The Local Sidereal Time, in hours since sidereal midnight
+ *              on this object's current date.
+ *
+ * @return      The corresponding Universal Time, in milliseconds since
+ *              1 Jan 1970, GMT.
+ */
+double CalendarAstronomer::lstToUT(double lst) {
+    // Convert to local mean time
+    double lt = normalize((lst - getSiderealOffset()) * 0.9972695663, 24);
+
+    // Then find local midnight on this day
+    double base = (DAY_MS * ClockMath::floorDivide(fTime + fGmtOffset,(double)DAY_MS)) - fGmtOffset;
+
+    //out("    lt  =" + lt + " hours");
+    //out("    base=" + new Date(base));
+
+    return base + (long)(lt * HOUR_MS);
+}
+
+
 //-------------------------------------------------------------------------
 // Coordinate transformations, all based on the current time of this object
 //-------------------------------------------------------------------------
+
+/**
+ * Convert from ecliptic to equatorial coordinates.
+ *
+ * @param ecliptic  A point in the sky in ecliptic coordinates.
+ * @return          The corresponding point in equatorial coordinates.
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+CalendarAstronomer::Equatorial& CalendarAstronomer::eclipticToEquatorial(CalendarAstronomer::Equatorial& result, const CalendarAstronomer::Ecliptic& ecliptic)
+{
+    return eclipticToEquatorial(result, ecliptic.longitude, ecliptic.latitude);
+}
 
 /**
  * Convert from ecliptic to equatorial coordinates.
@@ -345,6 +440,20 @@ CalendarAstronomer::Equatorial& CalendarAstronomer::eclipticToEquatorial(Calenda
     result.set(atan2(sinL*cosE - tanB*sinE, cosL),
         asin(sinB*cosE + cosB*sinE*sinL) );
     return result;
+}
+
+/**
+ * Convert from ecliptic longitude to equatorial coordinates.
+ *
+ * @param eclipLong     The ecliptic longitude
+ *
+ * @return              The corresponding point in equatorial coordinates.
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+CalendarAstronomer::Equatorial& CalendarAstronomer::eclipticToEquatorial(CalendarAstronomer::Equatorial& result, double eclipLong)
+{
+    return eclipticToEquatorial(result, eclipLong, 0);  // TODO: optimize
 }
 
 //-------------------------------------------------------------------------
@@ -486,6 +595,16 @@ double CalendarAstronomer::getSunLongitude()
 }
 
 /**
+ * The position of the sun at this object's current date and time,
+ * in equatorial coordinates.
+ * @internal
+ * @deprecated ICU 2.4. This class may be removed or modified.
+ */
+CalendarAstronomer::Equatorial& CalendarAstronomer::getSunPosition(CalendarAstronomer::Equatorial& result) {
+    return eclipticToEquatorial(result, getSunLongitude(), 0);
+}
+
+/**
  * Constant representing the winter solstice.
  * For use with {@link #getSunTime getSunTime}.
  * Note: In this case, "winter" refers to the northern hemisphere's seasons.
@@ -520,6 +639,38 @@ UDate CalendarAstronomer::getSunTime(double desired, UBool next)
                         TROPICAL_YEAR,
                         MINUTE_MS,
                         next);
+}
+
+CalendarAstronomer::CoordFunc::~CoordFunc() {}
+
+class RiseSetCoordFunc : public CalendarAstronomer::CoordFunc {
+public:
+    virtual ~RiseSetCoordFunc();
+    virtual void eval(CalendarAstronomer::Equatorial& result, CalendarAstronomer& a) override { a.getSunPosition(result); }
+};
+
+RiseSetCoordFunc::~RiseSetCoordFunc() {}
+
+UDate CalendarAstronomer::getSunRiseSet(UBool rise)
+{
+    UDate t0 = fTime;
+
+    // Make a rough guess: 6am or 6pm local time on the current day
+    double noon = ClockMath::floorDivide(fTime + fGmtOffset, (double)DAY_MS)*DAY_MS - fGmtOffset + (12*HOUR_MS);
+
+    U_DEBUG_ASTRO_MSG(("Noon=%.2lf, %sL, gmtoff %.2lf\n", noon, debug_astro_date(noon+fGmtOffset), fGmtOffset));
+    setTime(noon +  ((rise ? -6 : 6) * HOUR_MS));
+    U_DEBUG_ASTRO_MSG(("added %.2lf ms as a guess,\n", ((rise ? -6. : 6.) * HOUR_MS)));
+
+    RiseSetCoordFunc func;
+    double t = riseOrSet(func,
+                         rise,
+                         .533 * DEG_RAD,        // Angular Diameter
+                         34. /60.0 * DEG_RAD,    // Refraction correction
+                         MINUTE_MS / 12.);       // Desired accuracy
+
+    setTime(t0);
+    return t;
 }
 
 //-------------------------------------------------------------------------
@@ -764,6 +915,48 @@ UDate CalendarAstronomer::timeOfAngle(AngleFunc& func, double desired,
     return fTime;
 }
 
+UDate CalendarAstronomer::riseOrSet(CoordFunc& func, UBool rise,
+                                    double diameter, double refraction,
+                                    double epsilon)
+{
+    Equatorial pos;
+    double      tanL   = ::tan(fLatitude);
+    double     deltaT = 0;
+    int32_t         count = 0;
+
+    //
+    // Calculate the object's position at the current time, then use that
+    // position to calculate the time of rising or setting.  The position
+    // will be different at that time, so iterate until the error is allowable.
+    //
+    U_DEBUG_ASTRO_MSG(("setup rise=%s, dia=%.3lf, ref=%.3lf, eps=%.3lf\n",
+        rise?"T":"F", diameter, refraction, epsilon));
+    do {
+        // See "Practical Astronomy With Your Calculator, section 33.
+        func.eval(pos, *this);
+        double angle = ::acos(-tanL * ::tan(pos.declination));
+        double lst = ((rise ? CalendarAstronomer_PI2-angle : angle) + pos.ascension ) * 24 / CalendarAstronomer_PI2;
+
+        // Convert from LST to Universal Time.
+        UDate newTime = lstToUT( lst );
+
+        deltaT = newTime - fTime;
+        setTime(newTime);
+        U_DEBUG_ASTRO_MSG(("%d] dT=%.3lf, angle=%.3lf, lst=%.3lf,   A=%.3lf/D=%.3lf\n",
+            count, deltaT, angle, lst, pos.ascension, pos.declination));
+    }
+    while (++ count < 5 && uprv_fabs(deltaT) > epsilon);
+
+    // Calculate the correction due to refraction and the object's angular diameter
+    double cosD  = ::cos(pos.declination);
+    double psi   = ::acos(sin(fLatitude) / cosD);
+    double x     = diameter / 2 + refraction;
+    double y     = ::asin(sin(x) / ::sin(psi));
+    long  delta  = (long)((240 * y * RAD_DEG / cosD)*SECOND_MS);
+
+    return fTime + (rise ? -delta : delta);
+}
+
 /**
  * Return the obliquity of the ecliptic (the angle between the ecliptic
  * and the earth's equator) at the current time.  This varies due to
@@ -796,6 +989,8 @@ void CalendarAstronomer::clearCache() {
     sunLongitude    = INVALID;
     meanAnomalySun  = INVALID;
     moonEclipLong   = INVALID;
+    siderealTime    = INVALID;
+    siderealT0      = INVALID;
 
     moonPositionSet = false;
 }

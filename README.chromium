@@ -298,3 +298,7 @@ D. Local Modifications
     patches/unnecessary_virtual_specifier.patch
   - https://issues.chromium.org/issues/403236787
   - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3489.diff
+
+19. Add back CalendarAstronomer APIs used on ChromeOS.
+    patches/astro.patch
+  - https://crbug.com/419726206
