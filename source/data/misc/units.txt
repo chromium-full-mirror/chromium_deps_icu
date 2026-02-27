@@ -2,13 +2,8 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
 units:table(nofallback){
-    cldrVersion{"47"}
+    cldrVersion{"48"}
     convertUnits{
-        100-kilometer{
-            factor{"100000"}
-            systems{"si metric"}
-            target{"meter"}
-        }
         acre{
             factor{"ft2_to_m2 * 43560"}
             systems{"ussystem uksystem"}
@@ -120,11 +115,6 @@ units:table(nofallback){
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
         }
-        century-average-gregory{
-            factor{"100*12*2629746"}
-            systems{"metric"}
-            target{"second"}
-        }
         chain{
             factor{"ft_to_m*66"}
             systems{"ussystem uksystem"}
@@ -143,6 +133,11 @@ units:table(nofallback){
         cup{
             factor{"gal_to_m3/16"}
             systems{"ussystem"}
+            target{"cubic-meter"}
+        }
+        cup-imperial{
+            factor{"gal_imp_to_m3/16"}
+            systems{"uksystem"}
             target{"cubic-meter"}
         }
         cup-jp{
@@ -177,11 +172,6 @@ units:table(nofallback){
             factor{"10"}
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
-        }
-        decade-average-gregory{
-            factor{"10*12*2629746"}
-            systems{"metric"}
-            target{"second"}
         }
         degree{
             factor{"1/360"}
@@ -262,6 +252,11 @@ units:table(nofallback){
         fluid-ounce-imperial{
             factor{"gal_imp_to_m3/160"}
             systems{"uksystem"}
+            target{"cubic-meter"}
+        }
+        fluid-ounce-metric{
+            factor{"0.03*0.001"}
+            systems{"metric_adjacent"}
             target{"cubic-meter"}
         }
         foodcalorie{
@@ -380,7 +375,7 @@ units:table(nofallback){
         karat{
             factor{"1/24"}
             systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
+            target{"part"}
         }
         katal{
             factor{"item_per_mole"}
@@ -480,11 +475,6 @@ units:table(nofallback){
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
         }
-        month-average-gregory{
-            factor{"2629746"}
-            systems{"metric"}
-            target{"second"}
-        }
         month-person{
             factor{"1/12"}
             systems{"person_age"}
@@ -540,6 +530,11 @@ units:table(nofallback){
             systems{"astronomical prefixable"}
             target{"meter"}
         }
+        part{
+            factor{"1"}
+            systems{"metric_adjacent ussystem uksystem"}
+            target{"part"}
+        }
         pascal{
             factor{"1"}
             systems{"si metric prefixable"}
@@ -548,22 +543,17 @@ units:table(nofallback){
         percent{
             factor{"1/100"}
             systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
+            target{"part"}
         }
         permille{
             factor{"1/1000"}
             systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
-        }
-        permillion{
-            factor{"1/1000000"}
-            systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
+            target{"part"}
         }
         permyriad{
             factor{"1/10000"}
             systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
+            target{"part"}
         }
         pinch{
             factor{"gal_to_m3/128*128"}
@@ -595,11 +585,6 @@ units:table(nofallback){
             systems{"metric_adjacent ussystem uksystem"}
             target{"meter"}
         }
-        portion{
-            factor{"1"}
-            systems{"metric_adjacent ussystem uksystem"}
-            target{"portion"}
-        }
         pound{
             factor{"lb_to_kg"}
             systems{"ussystem uksystem"}
@@ -624,11 +609,6 @@ units:table(nofallback){
             factor{"1/4"}
             systems{"metric_adjacent"}
             target{"year"}
-        }
-        quarter-average-gregory{
-            factor{"3*2629746"}
-            systems{"metric"}
-            target{"second"}
         }
         radian{
             factor{"1/2*PI"}
@@ -805,11 +785,6 @@ units:table(nofallback){
             systems{"metric_adjacent prefixable ussystem uksystem astronomical"}
             target{"year"}
         }
-        year-average-gregory{
-            factor{"12*2629746"}
-            systems{"metric"}
-            target{"second"}
-        }
         year-person{
             factor{"1"}
             systems{"person_age"}
@@ -836,6 +811,58 @@ units:table(nofallback){
         sho_to_m3{"2401/1331*1000"}
         speed_of_light_meters_per_second{"299792458"}
         tsubo_to_m2{"400/121"}
+    }
+    unitIdComponents{
+        and{"and"}
+        per{"per"}
+        power{
+            "square",
+            "cubic",
+            "pow2",
+            "pow3",
+            "pow4",
+            "pow5",
+            "pow6",
+            "pow7",
+            "pow8",
+            "pow9",
+            "pow10",
+            "pow11",
+            "pow12",
+            "pow13",
+            "pow14",
+            "pow15",
+        }
+        prefix{
+            "arc",
+            "british",
+            "dessert",
+            "fluid",
+            "light",
+            "nautical",
+            "xxx",
+            "x",
+            "curr",
+        }
+        suffix{
+            "force",
+            "imperial",
+            "luminosity",
+            "mass",
+            "metric",
+            "person",
+            "radius",
+            "scandinavian",
+            "troy",
+            "unit",
+            "it",
+            "us",
+            "energy",
+            "density",
+            "cloth",
+            "length",
+            "jp",
+        }
     }
     unitPreferenceData{
         "area"{
@@ -2519,7 +2546,7 @@ units:table(nofallback){
             per-second{"radioactivity"}
         }
         {
-            portion{"portion"}
+            part{"portion"}
         }
         {
             bit{"digital"}
