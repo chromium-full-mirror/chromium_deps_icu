@@ -115,6 +115,11 @@ units:table(nofallback){
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
         }
+        century-average-gregory{
+            factor{"100*12*2629746"}
+            systems{"metric"}
+            target{"second"}
+        }
         chain{
             factor{"ft_to_m*66"}
             systems{"ussystem uksystem"}
@@ -172,6 +177,11 @@ units:table(nofallback){
             factor{"10"}
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
+        }
+        decade-average-gregory{
+            factor{"10*12*2629746"}
+            systems{"metric"}
+            target{"second"}
         }
         degree{
             factor{"1/360"}
@@ -475,6 +485,11 @@ units:table(nofallback){
             systems{"metric_adjacent ussystem uksystem astronomical"}
             target{"year"}
         }
+        month-average-gregory{
+            factor{"2629746"}
+            systems{"metric"}
+            target{"second"}
+        }
         month-person{
             factor{"1/12"}
             systems{"person_age"}
@@ -609,6 +624,11 @@ units:table(nofallback){
             factor{"1/4"}
             systems{"metric_adjacent"}
             target{"year"}
+        }
+        quarter-average-gregory{
+            factor{"3*2629746"}
+            systems{"metric"}
+            target{"second"}
         }
         radian{
             factor{"1/2*PI"}
@@ -784,6 +804,11 @@ units:table(nofallback){
             factor{"1"}
             systems{"metric_adjacent prefixable ussystem uksystem astronomical"}
             target{"year"}
+        }
+        year-average-gregory{
+            factor{"12*2629746"}
+            systems{"metric"}
+            target{"second"}
         }
         year-person{
             factor{"1"}

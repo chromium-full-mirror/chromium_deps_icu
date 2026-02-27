@@ -39,7 +39,6 @@ ar{
             }
         }
         default{"latn"}
-        default_latn{"latn"}
         latn{
             miscPatterns{
                 atLeast{"+{0}"}
