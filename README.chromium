@@ -224,8 +224,6 @@ D. Local Modifications
       Put ICU_DATA_ENTRY_POINT(icudtXX_dat) in common when we use
       the icu data file or icudt.dll
 
-TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now  applied, see note above at 1.a) for chromium-data.patch.
-
 TODO(remove this entry, tkent@): Investigate 5. ISO-2022-JP conversion.
 
 5. ISO-2022-JP encoding (fromUnicode) change per WHATWG encoding spec.
@@ -250,6 +248,9 @@ upstream bug: https://unicode-org.atlassian.net/browse/ICU-21482
 8.  Patch source/common/uposixdefs.h so it compiles on Fuchsia on Macs.
     patches/fuchsia.patch
   - context bug: https://bugs.chromium.org/p/chromium/issues/detail?id=1184527
+
+TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now applied,
+    except 4.5, and see note above at 1.a) for chromium-data.patch.
 
 9.  Patch fix of Etc/Unknown being returned for
     Intl.DateTimeFormat().resolvedOptions().timeZone on macOS 14.
