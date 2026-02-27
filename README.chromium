@@ -174,8 +174,6 @@ D. Local Modifications
     present with their display names populated, this patch has to be adjusted
     or discarded as necessary.
 
-TODO(remove this tracking line): 2026-02-27: drott@: Those are now applied, see note above for chromium-data.patch.
-
 2. Breakiterator patches
 
   - patches/line_normal.patch for word.txt
@@ -225,6 +223,10 @@ TODO(remove this tracking line): 2026-02-27: drott@: Those are now applied, see 
   - patches/data_symb.patch :
       Put ICU_DATA_ENTRY_POINT(icudtXX_dat) in common when we use
       the icu data file or icudt.dll
+
+TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now  applied, see note above at 1.a) for chromium-data.patch.
+
+TODO(remove this entry, tkent@): Investigate 5. ISO-2022-JP conversion.
 
 5. ISO-2022-JP encoding (fromUnicode) change per WHATWG encoding spec.
   - patches/iso2022jp.patch
