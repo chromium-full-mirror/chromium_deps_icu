@@ -257,8 +257,3 @@ TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now 
     patches/revert_realpath.patch
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1473422
   - https://unicode-org.atlassian.net/browse/ICU-22541
-
-10. Patch incorrect call to front().
-  - patches/uloc.patch
-  - https://g-issues.chromium.org/issues/451657601
-  - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3752.diff
