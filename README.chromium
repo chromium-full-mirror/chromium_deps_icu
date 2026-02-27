@@ -162,10 +162,7 @@ D. Local Modifications
    the upstream copy and Google's internal copy for source/data
 
   - patches/chromium-data.patch: Google's internal ICU locale changes, exported
-    for use in Chromium. (2026-02-27 @drott: Recreated by extracting file
-    list, then - for those files - diffing internal ICU repo against vanilla
-    upstream ICU source/data/** files. Also: ar_XB, en_XA files might not be
-    needed as the include lists in filter/ do not seem to include those.)
+    for use in Chromium. See http://shortn/_IpKvBUaQ4V
 
   - patches/locale1.patch: Minor fixes for Korean
 
