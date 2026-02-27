@@ -164,7 +164,8 @@ D. Local Modifications
   - patches/chromium-data.patch: Google's internal ICU locale changes, exported
     for use in Chromium. (2026-02-27 @drott: Recreated by extracting file
     list, then - for those files - diffing internal ICU repo against vanilla
-    upstream ICU source/data/** files.)
+    upstream ICU source/data/** files. Also: ar_XB, en_XA files might not be
+    needed as the include lists in filter/ do not seem to include those.)
 
   - patches/locale1.patch: Minor fixes for Korean
 
@@ -240,10 +241,6 @@ TODO(remove this entry, tkent@): Investigate 5. ISO-2022-JP conversion.
    third_party/blink/web_tests/fast/forms/datetimelocal/datetimelocal-appearance-l10n.html
   - patches/ardatepattern.patch
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1139186
-
-TODO(drott): Patch removed here, upstream change
-fad198a26c67346e96f4bbdc1236de59aba6eebe made this unnecessary. TODO close
-upstream bug: https://unicode-org.atlassian.net/browse/ICU-21482
 
 8.  Patch source/common/uposixdefs.h so it compiles on Fuchsia on Macs.
     patches/fuchsia.patch
