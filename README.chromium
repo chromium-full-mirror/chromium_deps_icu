@@ -249,11 +249,11 @@ upstream bug: https://unicode-org.atlassian.net/browse/ICU-21482
     patches/fuchsia.patch
   - context bug: https://bugs.chromium.org/p/chromium/issues/detail?id=1184527
 
-TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now applied,
-    except 4.5, and see note above at 1.a) for chromium-data.patch.
-
 9.  Patch fix of Etc/Unknown being returned for
     Intl.DateTimeFormat().resolvedOptions().timeZone on macOS 14.
     patches/revert_realpath.patch
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1473422
   - https://unicode-org.atlassian.net/browse/ICU-22541
+
+TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now applied,
+    except 4.5, and see note above at 1.a) for chromium-data.patch.
