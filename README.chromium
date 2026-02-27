@@ -258,12 +258,7 @@ TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now 
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1473422
   - https://unicode-org.atlassian.net/browse/ICU-22541
 
-10. Patch unnecessary uses of the virtual keyword.
-    patches/unnecessary_virtual_specifier.patch
-  - https://issues.chromium.org/issues/403236787
-  - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3489.diff
-
-11. Patch incorrect call to front().
+10. Patch incorrect call to front().
   - patches/uloc.patch
   - https://g-issues.chromium.org/issues/451657601
   - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3752.diff
