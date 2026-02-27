@@ -243,36 +243,26 @@ TODO(remove this entry, tkent@): Investigate 5. ISO-2022-JP conversion.
   - patches/ardatepattern.patch
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1139186
 
-8.  Remove explicit std::atomic<NumberRangeFormatterImpl*> template
-    instantiation
-    patches/atomic_template_instantiation.patch
-  - The explicit instantiation was added to silence MSVC C4251 warnings:
-    https://unicode-org.atlassian.net/browse/ICU-20157
-    Small test cases show that it is generally an error to instantiate
-    std::atomic<T*> with an incomplete type T with MSVC, clang, and GCC, so this
-    instantiation never should have worked:
-    https://gcc.godbolt.org/z/34xx8h
-    At this time, it's not clear if this particular instantiation with
-    NumberRangeFormatterImpl* was ever necessary for MSVC. Further testing with
-    MSVC is required to upstream this patch.
-  - https://unicode-org.atlassian.net/browse/ICU-21482
+TODO(drott): Patch removed here, upstream change
+fad198a26c67346e96f4bbdc1236de59aba6eebe made this unnecessary. TODO close
+upstream bug: https://unicode-org.atlassian.net/browse/ICU-21482
 
-9.  Patch source/common/uposixdefs.h so it compiles on Fuchsia on Macs.
+8.  Patch source/common/uposixdefs.h so it compiles on Fuchsia on Macs.
     patches/fuchsia.patch
   - context bug: https://bugs.chromium.org/p/chromium/issues/detail?id=1184527
 
-10. Patch fix of Etc/Unknown being returned for
+9.  Patch fix of Etc/Unknown being returned for
     Intl.DateTimeFormat().resolvedOptions().timeZone on macOS 14.
     patches/revert_realpath.patch
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1473422
   - https://unicode-org.atlassian.net/browse/ICU-22541
 
-11. Patch unnecessary uses of the virtual keyword.
+10. Patch unnecessary uses of the virtual keyword.
     patches/unnecessary_virtual_specifier.patch
   - https://issues.chromium.org/issues/403236787
   - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3489.diff
 
-12. Patch incorrect call to front().
+11. Patch incorrect call to front().
   - patches/uloc.patch
   - https://g-issues.chromium.org/issues/451657601
   - https://patch-diff.githubusercontent.com/raw/unicode-org/icu/pull/3752.diff
