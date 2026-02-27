@@ -15,10 +15,6 @@ lang/an.txt
 lang/ku.txt
 lang/tg.txt
 lang/wa.txt
-mappings/big5-html.ucm
-mappings/euc-jp-html.ucm
-mappings/euc-kr-html.ucm
-mappings/ibm866-html.ucm
 mappings/iso-8859-10-html.ucm
 mappings/iso-8859-13-html.ucm
 mappings/iso-8859-14-html.ucm
@@ -31,8 +27,6 @@ mappings/iso-8859-5-html.ucm
 mappings/iso-8859-6-html.ucm
 mappings/iso-8859-7-html.ucm
 mappings/iso-8859-8-html.ucm
-mappings/koi8-r-html.ucm
-mappings/koi8-u-html.ucm
 mappings/macintosh-html.ucm
 mappings/shift_jis-html.ucm
 mappings/windows-1250-html.ucm
@@ -46,3 +40,9 @@ mappings/windows-1257-html.ucm
 mappings/windows-1258-html.ucm
 mappings/windows-874-html.ucm
 mappings/x-mac-cyrillic-html.ucm
+mappings/big5-html.ucm
+mappings/euc-jp-html.ucm
+mappings/euc-kr-html.ucm
+mappings/ibm866-html.ucm
+mappings/koi8-r-html.ucm
+mappings/koi8-u-html.ucm
