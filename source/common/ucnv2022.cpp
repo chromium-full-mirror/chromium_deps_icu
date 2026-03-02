@@ -1857,7 +1857,7 @@ getTrail:
                     /* G0 DBCS from Shift-JIS table */
                     len2 = MBCS_FROM_UCHAR32_ISO2022(
                                 converterData->myConverterArray[cs0],
-                                sourceChar, &value,x
+                                sourceChar, &value,
                                 useFallback, MBCS_OUTPUT_2);
                     // Only accept DBCS char (abs(len2) == 2).
                     // With EUC-JP table for JIS X 208, half-width Kana
