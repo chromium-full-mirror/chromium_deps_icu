@@ -247,5 +247,7 @@ D. Local Modifications
   - https://bugs.chromium.org/p/chromium/issues/detail?id=1473422
   - https://unicode-org.atlassian.net/browse/ICU-22541
 
-TODO(remove this tracking line): 2026-02-27: drott@: Patches up to here are now applied,
-    except 4.5, and see note above at 1.a) for chromium-data.patch.
+10. Patch string storage size to 300000
+    patches/pkgdata_string_storage.h
+    Patch already landed in upstream an should be included in future releases.
+  - https://unicode-org.atlassian.net/browse/ICU-23276
