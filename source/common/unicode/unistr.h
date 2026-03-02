@@ -355,7 +355,7 @@ public:
   inline bool operator==(const S &text) const {
     std::u16string_view sv(internal::toU16StringView(text));
     uint32_t len;  // unsigned to avoid a compiler warning
-    return !isBogus() && (len = length()) == sv.length() && doEquals(sv.data(), len);
+    return !isBogus() && (len = static_cast<uint32_t>(length())) == static_cast<uint32_t>(sv.length()) && doEquals(sv.data(), static_cast<int32_t>(len));
   }
 
   /**
