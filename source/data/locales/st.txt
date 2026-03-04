@@ -14,7 +14,7 @@ st{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "Hoseng",
                 "Thapama",
             }

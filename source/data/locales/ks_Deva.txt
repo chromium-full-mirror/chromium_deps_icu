@@ -41,7 +41,7 @@ ks_Deva{
             }
         }
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "ये एम",
                 "पी एम",
             }

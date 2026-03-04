@@ -20,7 +20,7 @@ vmw{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "vaasisu",
                 "makaaripi",
             }

@@ -21,7 +21,7 @@ prg{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "ankstāinan",
                 "pa pussideinan",
             }

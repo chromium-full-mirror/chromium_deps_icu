@@ -23,7 +23,7 @@ gaa{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "LEEBI",
                 "SHWANE",
             }

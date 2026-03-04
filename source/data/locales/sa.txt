@@ -75,7 +75,7 @@ sa{
             }
         }
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "पूर्वाह्न",
                 "अपराह्न",
             }

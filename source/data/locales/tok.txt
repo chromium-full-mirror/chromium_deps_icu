@@ -30,7 +30,7 @@ tok{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "pi open suno",
                 "pi pini suno",
             }

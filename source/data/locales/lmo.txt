@@ -15,7 +15,7 @@ lmo{
     }
     calendar{
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "del matin",
                 "de sira",
             }

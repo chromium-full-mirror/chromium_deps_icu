@@ -256,3 +256,11 @@ D. Local Modifications
     patches/cast_implicit_conversion.patch
     As of 2026-03-02: Not fixed in upstream.
   - https://unicode-org.atlassian.net/browse/ICU-23125
+
+12. AmPmMarkers compatibility for ICU 78+
+    Since ICU 78, interpretation of `AmPmMarkers` was changed. We patch locale
+    files to keep the behavior.  Firefox and google3 don't have such local
+    changes, and we may remove the patch if we prefer interoperability to
+    backward compatibility.
+  - patches/ampmmarkers.patch
+  - https://unicode-org.atlassian.net/browse/ICU-23332

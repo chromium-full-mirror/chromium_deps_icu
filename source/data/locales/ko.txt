@@ -1070,7 +1070,7 @@ ko{
             }
         }
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "오전",
                 "오후",
             }

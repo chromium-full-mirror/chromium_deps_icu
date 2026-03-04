@@ -97,7 +97,7 @@ os{
             }
         }
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "ӕмбисбоны размӕ",
                 "ӕмбисбоны фӕстӕ",
             }

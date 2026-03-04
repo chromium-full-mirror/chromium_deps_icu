@@ -189,7 +189,7 @@ ks{
             }
         }
         gregorian{
-            AmPmMarkers{
+            AmPmMarkersAbbr{
                 "اے ایم",
                 "پی ایم",
             }
