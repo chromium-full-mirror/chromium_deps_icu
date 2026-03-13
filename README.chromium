@@ -258,3 +258,11 @@ D. Local Modifications
     backward compatibility.
   - patches/ampmmarkers.patch
   - https://unicode-org.atlassian.net/browse/ICU-23332
+
+12. Hv compatibility for "en" locale
+    Since ICU 78, "Hv" time format pattern for "en" locale has an extra 'h',
+    and it was alrady reverted in CLDR.
+  - patches/cldr-hv-en-root.diff
+  - crbug.com/475851786
+  - https://bugzilla.mozilla.org/show_bug.cgi?id=2010411
+  - https://github.com/unicode-org/cldr/pull/5309
