@@ -309,3 +309,9 @@ D. Local Modifications
   - https://github.com/unicode-org/icu/pull/4214
   - https://github.com/unicode-org/icu/pull/4296
   - https://crbug.com/574025697
+
+20. Check memory allocation failures in DecNum, Scale, and MaybeStackArray.
+  - patches/decnum_alloc_failure.patch
+  - https://unicode-org.atlassian.net/browse/ICU-23604
+  - https://github.com/unicode-org/icu/pull/4345
+  - https://crbug.com/573288374
